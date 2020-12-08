@@ -1,0 +1,12 @@
+# dependencies
+/node_modules
+
+#lock files
+package-lock.json
+
+# production
+/build
+/dist
+
+#logs
+*.log
