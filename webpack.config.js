@@ -1,7 +1,6 @@
-const path = require("path");
-const HtmlWebpackPlugin = require('html-webpack-plugin')
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
-
 
 module.exports = {
   mode: 'development',
@@ -15,7 +14,7 @@ module.exports = {
     filename: 'bundle.js',
   },
   devServer: {
-    contentBase: "./dist",
+    contentBase: './dist',
     port: 9000,
     hot: true,
     open: true,
@@ -25,7 +24,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Hello Webpack bundled JavaScript Project',
       template: path.resolve(__dirname, './src/index.html'),
-    })
+    }),
   ],
   module: {
     rules: [
@@ -33,6 +32,10 @@ module.exports = {
         test: /\.(js|jsx)$/,
         exclude: /node_modules/,
         use: ['babel-loader'],
+      },
+      {
+        test: /\.(scss|css)$/,
+        use: ['style-loader', 'css-loader', 'sass-loader'],
       },
     ],
   },

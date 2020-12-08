@@ -1,32 +1,32 @@
-import React from "react";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
-import Contact from "./Contact";
-import Home from "./Home";
+import React from 'react';
+import { Col, Container, Row } from 'react-bootstrap';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Contact from './Contact';
+import Home from './Home';
+import Menu from './Menu';
+import Sidebar from './Sidebar';
 
 export default function Navigation() {
   return (
     <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/contact">Contact Us</Link>
-            </li>
-          </ul>
-        </nav>
+      <Container fluid>
+        <Row>
+          <Col xs={5} className="d-none d-sm-block">
+            <Sidebar />
+          </Col>
 
-        <Switch>
-          <Route path="/contact">
-            <Contact />
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </div>
+          <Col className="d-block d-sm-none">
+            <Menu />
+          </Col>
+
+          <Col xs={7}>
+            <Switch>
+              <Route path="/" exact component={Home} />
+              <Route path="/contact" component={Contact} />
+            </Switch>
+          </Col>
+        </Row>
+      </Container>
     </Router>
   );
 }
