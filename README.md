@@ -4,6 +4,8 @@ This project is Undabot company Fullstack Recruitment Task
 by Alen Begovic - alen.begovic@gmail.com
 @December 2020
 
+Example Frontend and Backend App in React 17, React Hooks, Express, NodeJs & React Bootstrap
+
 ## Frontend Project runnning & building
 
 to run the project please use `npm` or `yarn` package managers
