@@ -11,7 +11,7 @@ function Home() {
       </Row>
       <Row>
         <Col>
-          <Card style={{ width: '18rem' }}>
+          <Card style={{ width: '21rem' }}>
             <Card.Img variant="top" src="https://picsum.photos/seed/picsum/200/300" />
             <Card.Body>
               <Card.Title>Picture Title</Card.Title>

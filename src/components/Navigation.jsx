@@ -11,15 +11,22 @@ export default function Navigation() {
     <Router>
       <Container fluid>
         <Row>
-          <Col xs={5} className="d-none d-sm-block">
+          <Col xs={4} className="d-none d-sm-block">
             <Sidebar />
           </Col>
 
-          <Col className="d-block d-sm-none">
+          <Col xs={12} className="d-block d-sm-none">
             <Menu />
           </Col>
 
-          <Col xs={7}>
+          <Col xs={8} className="d-none d-sm-block">
+            <Switch>
+              <Route path="/" exact component={Home} />
+              <Route path="/contact" exact component={Contact} />
+            </Switch>
+          </Col>
+
+          <Col xs={12} className="d-block d-sm-none">
             <Switch>
               <Route path="/" exact component={Home} />
               <Route path="/contact" component={Contact} />
