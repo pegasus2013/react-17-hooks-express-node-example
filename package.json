@@ -5,6 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "start": "webpack --watch serve --open chrome",
+    "server": "nodemon ./server/index.js 8080",
     "build": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -33,10 +34,18 @@
     "webpack-dev-server": "^3.11.0"
   },
   "dependencies": {
+    "axios": "^0.21.0",
+    "body-parser": "^1.19.0",
     "bootstrap": "^4.5.3",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.6",
     "react": "^17.0.1",
     "react-bootstrap": "^1.4.0",
     "react-dom": "^17.0.1",
     "react-router-dom": "^5.2.0"
+  },
+  "browser": {
+    "buffer": false
   }
 }

@@ -1,3 +1,10 @@
+/**
+ * @description React 17 Frontend Application for Undabot ltd. Frontend Recruitment test
+ * @author Alen Begovic - alen.begovic@gmail.com
+ * @date December 2020
+ *
+ */
+
 import React, { useState } from 'react';
 import Alert from 'react-bootstrap/Alert';
 import {
@@ -16,14 +23,20 @@ const emailNotValidError = 'Email address is not valid';
 const messageNotValidError = 'The message must be longer than 30 characters';
 
 function Contact() {
-  const [email, setEmail] = useState('');
-  const [message, setMessage] = useState('');
-  const [responseData, setResponse] = useState('');
+  const [checkboxChecked, setCheckbox] = useState(false);
+  const [email, setEmail] = useState(EMPTY_STRING);
+  const [message, setMessage] = useState(EMPTY_STRING);
+  const [responseData, setResponse] = useState(EMPTY_STRING);
+  const [responseCode, setResponseCode] = useState(EMPTY_STRING);
   const [success, setSuccess] = useState(null);
   const [validationErrors, setValidationErrors] = useState({
     emailInvalid: EMPTY_STRING,
     messageInvalid: EMPTY_STRING,
   });
+
+  function OnCheckBoxClick(e) {
+    setCheckbox(e.target.checked);
+  }
 
   function validateEmail(value) {
     const valid = ClientValidator.validateEmail(value);
@@ -56,12 +69,12 @@ function Contact() {
   }
 
   function onEmailChange(value) {
-    validateEmail(value);
+    if (checkboxChecked) validateEmail(value); // enable/disable Client side validation
     setEmail(value);
   }
 
   function onMessageChange(value) {
-    validateMessage(value);
+    if (checkboxChecked) validateMessage(value); // enable/disable Client side validation
     setMessage(value);
   }
 
@@ -82,16 +95,15 @@ function Contact() {
     ContactService.create(data)
       .then((response) => {
         setResponse(JSON.stringify(response.data));
+        setResponseCode(response.status);
         setSuccess(true);
       })
-      .catch((event) => {
-        setResponse(JSON.stringify(event));
+      .catch((error) => {
+        setResponse(JSON.stringify(error.response.data));
+        setResponseCode(error.response.status);
         setSuccess(ERROR);
       });
   }
-
-  if (responseData !== EMPTY_STRING) console.log('responseData', responseData);
-  console.log('success', success);
 
   return (
     <>
@@ -106,9 +118,19 @@ function Contact() {
 
           <Form onSubmit={(e) => handleSubmit(e)}>
             <Form.Group>
+              <input
+                title="Click"
+                type="checkbox"
+                onClick={(e) => OnCheckBoxClick(e)}
+                checked={checkboxChecked}
+              />
+              {' '}
+              <Form.Label>On/Off Client side validation</Form.Label>
+            </Form.Group>
+            <Form.Group>
               <Form.Label>Email address</Form.Label>
               <Form.Control isInvalid={validationErrors.emailInvalid !== EMPTY_STRING} type="text" placeholder="name@example.com" onChange={(e) => onEmailChange(e.target.value)} />
-              {validationErrors.emailInvalid !== EMPTY_STRING
+              {checkboxChecked && validationErrors.emailInvalid !== EMPTY_STRING
                && (
                <ul>
                  <li className={styles.invalidField}>
@@ -121,7 +143,7 @@ function Contact() {
             <Form.Group>
               <Form.Label>Message</Form.Label>
               <Form.Control isInvalid={validationErrors.messageInvalid !== EMPTY_STRING} as="textarea" rows={5} onChange={(e) => onMessageChange(e.target.value)} />
-              {validationErrors.messageInvalid !== EMPTY_STRING
+              {checkboxChecked && validationErrors.messageInvalid !== EMPTY_STRING
               && (
               <ul>
                 <li className={styles.invalidField}>
@@ -145,11 +167,16 @@ function Contact() {
 
           </Form>
 
-          {/* responseData !== '' && (
-          <Form.Group>
-            {responseData}
-          </Form.Group>
-          ) */}
+          {responseData !== '' && (
+          <Form.Row>
+            <Col>
+              {responseCode}
+            </Col>
+            <Col>
+              {responseData}
+            </Col>
+          </Form.Row>
+          )}
 
         </Col>
       </Row>
